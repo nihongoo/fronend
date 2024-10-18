@@ -4,6 +4,20 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// function eComt(id){
+//   setInterval(() => {
+//     window.dispatchEvent(
+//       new CustomEvent(`lesson-${id}`,{
+//         detail: `Nội dung cmt của ls ${id}`
+//       })
+//     )
+//   },2000);
+// }
+
+// eComt(1)
+// eComt(2)
+// eComt(3)
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
