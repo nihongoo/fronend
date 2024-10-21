@@ -9,7 +9,7 @@ function Header({ setCollapsed, collapsed }) {
                     className='sb-button m-2 btn border border-dark'
                     onClick={() => setCollapsed(!collapsed)}
                 >
-                    <i class="fa-solid fa-bars"></i>
+                    <i className="fa-solid fa-bars"></i>
                 </button>
                 aaaaa
             </div>

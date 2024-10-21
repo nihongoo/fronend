@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const DataTable = ({ columns, data }) => {
     return (
-        <div className='p-3'>
+        <div>
             <table className="table">
                 <thead>
                     <tr>
