@@ -1,11 +1,14 @@
 import Delete from '../CRUD/Delete';
+import Edit from '../CRUD/Edit'
 import apiURL from '../../Routes/API';
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 const DataTable = ({ columns, data, onChangeData }) => {
-    console.log(data);
-
+    const [editId, setEditId] = useState(null)
+    const handleEdit = useCallback((id) => {
+        setEditId((prevId) => (prevId === id ? null : id));
+    }, []);
     return (
         <div>
             <table className="table">
@@ -29,7 +32,20 @@ const DataTable = ({ columns, data, onChangeData }) => {
                             ))}
                             <th>
                                 <div className='d-flex'>
-                                    <button>Edit</button>
+                                    <button
+                                        className='btn me-1 btn-outline-warning'
+                                        onClick={()=>handleEdit(item.idCategory)}
+                                    >
+                                        Edit
+                                    </button>
+                                    {editId === item.idCategory &&
+                                        <Edit
+                                            apiURL={apiURL.category.edit}
+                                            onClose={()=>setEditId(null)}
+                                            obj={item}
+                                            onChangeData={onChangeData}
+                                        />
+                                    }
                                     <Delete
                                         apiURL={apiURL.category.delete}
                                         id={item.idCategory}

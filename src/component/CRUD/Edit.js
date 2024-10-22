@@ -1,4 +1,43 @@
-function Edit() {
+import { memo, useEffect, useState } from "react"
+import { toast } from "react-toastify"
+
+const Edit = memo(({apiURL, onClose, obj, onChangeData})=> {   
+    const [uName,setName] = useState(obj.name)
+    useEffect(()=>{
+        setName(obj.name)
+    },[obj])
+
+    const updateObj = {
+        idCategory: obj.idCategory,
+        name: uName,
+        status: 0
+      }
+
+    const handleEdit = async () =>{
+        try {
+            const response = await fetch(apiURL,{
+                method:'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updateObj),
+            })
+            if(response.ok){
+                toast.success('Sửa thành công')
+                onChangeData()
+                onClose()
+            }
+            else{
+                console.log(response);
+                
+                throw new Error("Lỗi");
+            }
+        } catch (error) {
+            console.log(error);
+            
+        }
+
+    }
     return (
         <div className="position-absolute" style={{ zIndex: '5' }}>
             <div
@@ -22,13 +61,13 @@ function Edit() {
             >
                 <div>
                     <div>
-                        <h2 className="d-flex justify-content-center">Thêm mới {pageName}</h2>
+                        <h2 className="d-flex justify-content-center">Sửa</h2>
                     </div>
                     <div>
                         <label>Tên loại</label>
                         <input
                             type="text"
-                            value={name}
+                            value={uName}
                             onChange={(e) => setName(e.target.value)}
                             required
                             className="form-control"
@@ -40,14 +79,14 @@ function Edit() {
                             className="btn btn-outline-danger me-2"
                         >Hủy</button>
                         <button
-                            className="btn btn-outline-success"
-                            onClick={handleAdd}
-                        >Thêm</button>
+                            className="btn btn-outline-warning"
+                            onClick={handleEdit}
+                        >Sửa</button>
                     </div>
                 </div>
             </div>
         </div>
     );
-}
+})
 
 export default Edit;
