@@ -1,8 +1,11 @@
-// DataTable.js
+import Delete from '../CRUD/Delete';
+import apiURL from '../../Routes/API';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const DataTable = ({ columns, data }) => {
+const DataTable = ({ columns, data, onChangeData }) => {
+    console.log(data);
+
     return (
         <div>
             <table className="table">
@@ -12,6 +15,9 @@ const DataTable = ({ columns, data }) => {
                         {columns.map((column) => (
                             <th key={column.accessor} scope="col">{column.Header}</th>
                         ))}
+                        <th>
+                            Action
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -21,6 +27,16 @@ const DataTable = ({ columns, data }) => {
                             {columns.map((column) => (
                                 <td key={column.accessor}>{item[column.accessor]}</td>
                             ))}
+                            <th>
+                                <div className='d-flex'>
+                                    <button>Edit</button>
+                                    <Delete
+                                        apiURL={apiURL.category.delete}
+                                        id={item.idCategory}
+                                        onChangeData={onChangeData}
+                                    ></Delete>
+                                </div>
+                            </th>
                         </tr>
                     ))}
                 </tbody>

@@ -3,25 +3,26 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
-// function eComt(id){
-//   setInterval(() => {
-//     window.dispatchEvent(
-//       new CustomEvent(`lesson-${id}`,{
-//         detail: `Nội dung cmt của ls ${id}`
-//       })
-//     )
-//   },2000);
-// }
-
-// eComt(1)
-// eComt(2)
-// eComt(3)
+import { Bounce, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <App />
+    <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme='light'
+      transition={Bounce}
+    />
   </React.StrictMode>
 );
 

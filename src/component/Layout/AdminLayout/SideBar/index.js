@@ -4,7 +4,7 @@ import logo from '../../../../Asset/Export_Image'
 
 function SideBar({ collapsed }) {
     return (
-        <div className='border' style={{ height: '100vh', backgroundColor: '#f3f3f3' }}>
+        <div className='border-end ' style={{ height: '100%'}}>
             <SbToggle
                 collapsed={collapsed}
                 collapsedWidth='60px'
