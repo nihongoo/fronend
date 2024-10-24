@@ -1,17 +1,22 @@
 import { memo, useEffect, useState } from "react"
 import { toast } from "react-toastify"
 
-const Edit = memo(({apiURL, onClose, obj, onChangeData})=> {   
+const Edit = memo(({apiURL, onClose, obj, onChangeData})=> {
+    console.log(obj);
+       
     const [uName,setName] = useState(obj.name)
     useEffect(()=>{
         setName(obj.name)
     },[obj])
-
+    const {serialNumber, ...rest} = obj
     const updateObj = {
-        idCategory: obj.idCategory,
+        ...rest,
         name: uName,
         status: 0
       }
+
+      console.log(updateObj);
+      
 
     const handleEdit = async () =>{
         try {

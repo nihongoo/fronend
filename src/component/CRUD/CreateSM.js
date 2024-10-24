@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-function Create({ onClose, pageName, apiURL, onChangeData }) {
+function Create({moreField, onClose, pageName, apiURL, onChangeData }) {
     const [name, setName] = useState('')
+    const obj ={
+        ...moreField,
+        name
+    }
 
     const handleAdd = async () => {
         try {
@@ -11,7 +15,7 @@ function Create({ onClose, pageName, apiURL, onChangeData }) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ name })
+                body: JSON.stringify(obj)
             })
 
             if (res.ok) {
