@@ -1,25 +1,21 @@
 import { toast } from "react-toastify";
-function Delete({apiURL, id, onChangeData}) {
+function Delete({ apiURL, id, onChangeData }) {
 
     const handleDelete = async () => {
         try {
-            console.log(apiURL);
-            
-            console.log(id);
-            
-            const response = await fetch(`${apiURL}?ID=${id}`,{
-                method:'DELETE'
+            const response = await fetch(`${apiURL}?ID=${id}`, {
+                method: 'DELETE'
             })
-
             if (response.ok) {
                 onChangeData(true)
                 toast.success('Xóa thành công!')
             }
             else {
-                toast.error('Lỗi')
+                toast.error('Xóa thất bại')
                 throw new Error("Lỗi");
             }
         } catch (error) {
+            toast.error('Xóa thất bại')
             console.log(error);
 
         }

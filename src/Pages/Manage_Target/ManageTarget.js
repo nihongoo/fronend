@@ -20,9 +20,7 @@ function ManageTarget() {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                const data = await response.json();
-                console.log(data);
-                
+                const data = await response.json();               
                 const formatData = data.map((item) => ({
                     id: item.idTagetCustomer,
                     name: item.name,
@@ -41,7 +39,6 @@ function ManageTarget() {
     }, [dataChange]);
 
     const handleSearch = (data) => {
-        console.log('s data' + data);
         settarget(data);
     };
 
@@ -88,7 +85,7 @@ function ManageTarget() {
                         {create && (
                             <Create
                                 apiURL={apiURL.target.create}
-                                pageName={'loại sản phẩm'}
+                                pageName={'đối tượng sử dụng'}
                                 onClose={() => setCreate(false)}
                                 onChangeData={handleChangeData}
                             />

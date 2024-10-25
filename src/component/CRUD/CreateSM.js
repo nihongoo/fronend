@@ -59,7 +59,7 @@ function Create({moreField, onClose, pageName, apiURL, onChangeData }) {
                         <h2 className="d-flex justify-content-center">Thêm mới {pageName}</h2>
                     </div>
                     <div>
-                        <label>Tên loại</label>
+                        <label>Tên {pageName}</label>
                         <input
                             type="text"
                             value={name}

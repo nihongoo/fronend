@@ -23,6 +23,27 @@ const apiURL = {
         delete: 'https://localhost:7265/TagetCustomers/Delete-TagetCustomers',
         search: 'https://localhost:7265/TagetCustomers/Search'
     },
+    color: {
+        base: 'https://localhost:7265/Color/Color/',
+        all: 'https://localhost:7265/Color/Get-All-Color/',
+        create: 'https://localhost:7265/Color/Create-Color/',
+        edit: 'https://localhost:7265/Color/Edit-Color/',
+        delete: 'https://localhost:7265/Color/Delete-Color',
+        search: 'https://localhost:7265/Color/Search'
+    },
+    size: {
+        base: 'https://localhost:7265/Size/Size/',
+        all: 'https://localhost:7265/Size/Get-All-Size/',
+        create: 'https://localhost:7265/Size/Create-Size/',
+        edit: 'https://localhost:7265/Size/Edit-Size/',
+        delete: 'https://localhost:7265/Size/Delete-Size',
+        search: 'https://localhost:7265/Size/Search'
+    },
+    product: {
+        base: 'https://localhost:7265/Product/Product/',
+        all: 'https://localhost:7265/Product/Get-All-Product/',
+        create: 'https://localhost:7265/Product/Create-Product/',
+    },
 };
 
 export default apiURL;

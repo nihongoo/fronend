@@ -15,7 +15,8 @@ function AdminLayout({ children }) {
                 <Header setCollapsed={setCollapsed} collapsed={collapsed} />
                 <div
                     style={{
-                        height: '100vh'
+                        height: '100vh',
+                        overflowY: 'auto'
                     }}
                     className='m-0 bg-body-secondary p-0'
                 >

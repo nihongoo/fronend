@@ -28,6 +28,7 @@ function ManageCategory() {
         }))
         setCategory(formatData);
         setDataChange(false);
+        localStorage.setItem('category',JSON.stringify(formatData))
       } catch (err) {
         setError(err.message);
       } finally {
@@ -39,7 +40,6 @@ function ManageCategory() {
   }, [dataChange]);
 
   const handleSearch = (data) => {
-    console.log('s data' + data);
     setCategory(data);
   };
 

@@ -30,6 +30,7 @@ function ManageBrand() {
           }))
           setbrand(formatData);
           setDataChange(false);
+          localStorage.setItem('brand',JSON.stringify(formatData))
         } catch (err) {
           setError(err.message);
         } finally {

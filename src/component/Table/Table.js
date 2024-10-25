@@ -2,6 +2,7 @@ import Delete from '../CRUD/Delete';
 import Edit from '../CRUD/Edit';
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 const DataTable = ({ columns, data, onChangeData, apiURLDel, apiURLEdit }) => {
     const [editId, setEditId] = useState(null);
@@ -9,6 +10,8 @@ const DataTable = ({ columns, data, onChangeData, apiURLDel, apiURLEdit }) => {
     const handleEdit = useCallback((id) => {
         setEditId((prevId) => (prevId === id ? null : id));
     }, []);
+    console.log(data);
+    
 
     return (
         <div>
@@ -26,7 +29,14 @@ const DataTable = ({ columns, data, onChangeData, apiURLDel, apiURLEdit }) => {
                         return (
                             <tr key={item.id}>
                                 {columns.map((column) => (
-                                    <td key={column.accessor}>{item[column.accessor]}</td>
+                                    <td key={column.accessor}>
+                                        {column.accessor === 'createTime'
+                                            ? moment(item[column.accessor]).format('DD-MM-YYYY')
+                                            : column.accessor === 'image'
+                                                ? <img src={item[column.accessor]} alt="Product" style={{ width: '50px', height: '50px' }} />
+                                                : item[column.accessor]
+                                        }
+                                    </td>
                                 ))}
                                 <td>
                                     <div className='d-flex'>

@@ -11,12 +11,14 @@ import ManageVoucher from '../Pages/Manage_Voucher/ManageVoucher'
 import ManageSale from '../Pages/Manage_Sale/ManageSale'
 import Account from '../Pages/Account/Account'
 import ManageCustomer from '../Pages/Manage_Customer/ManageCustomer'
+import CreateLG from '../Pages/Manage_Product/CreateLG'
 
 const publicProutes = [
     { path: '/', component: Home , layout: 'admin'},
     { path: '/soldoffline', component: SoldOfline, layout: 'admin' },
     { path: '/managebill', component: ManageBill, layout: 'admin' },
     { path: '/manageproduct', component: ManageProduct, layout: 'admin' },
+    { path: '/manageproduct/add', component: CreateLG, layout: 'admin' },
     { path: '/managecategory', component: ManageCategory, layout: 'admin' },
     { path: '/managebrand', component: ManageBrand, layout: 'admin' },
     { path: '/managemeterial', component: ManageMeterial, layout: 'admin' },
