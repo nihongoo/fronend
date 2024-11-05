@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import apiURL from "../../Routes/API";
 import useFetchData from "../../customHook/useFetchData";
-import { toast } from "react-toastify";
 
 function Size({ onClose, onAddSize, SizeSelect }) {
     const [selectedSizes, setSelectedSizes] = useState(SizeSelect);
-    const [name, setName] = useState('')
     const handleSizeSelect = (size) => {
         if (selectedSizes.some(selected => selected.id === size.id)) {
             setSelectedSizes(selectedSizes.filter(selected => selected.id !== size.id));
@@ -28,29 +26,6 @@ function Size({ onClose, onAddSize, SizeSelect }) {
     const handleClose = () => {
         onClose();
     };
-
-    const handleAddSize = async () =>{
-        try {
-            const res = await fetch(apiURL.size.create, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({name})
-            })
-
-            if (res.ok) {
-                toast.success(`Thêm kích thước mới thành công`)
-                setName('')
-                onClose()
-            }
-            else {
-                throw new Error('Thêm thất bại')
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }
 
     return (
         <div className="position-absolute" style={{ zIndex: '5' }}>
@@ -94,24 +69,11 @@ function Size({ onClose, onAddSize, SizeSelect }) {
                             </div>
                         ))}
                     </div>
-                    <div>
-                        <label>Thêm kích thước</label>
-                        <input
-                            type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            className="form-control"
-                        />
-                    </div>
                     <div className="d-flex justify-content-end mt-2">
                         <button
                             onClick={handleClose}
                             className="btn btn-outline-danger me-2"
                         >Hủy</button>
-                        <button
-                        onClick={handleAddSize}
-                            className="btn btn-outline-success"
-                        >Thêm</button>
                     </div>
                 </div>
             </div>

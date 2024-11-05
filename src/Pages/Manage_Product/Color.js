@@ -15,6 +15,14 @@ function Color({ onClose, onAddColor, colorSelect }) {
         }
     };
 
+const handleDelColor = () => {
+    try {
+        
+    } catch (error) {
+        
+    }
+}
+
     const { data: colors } = useFetchData(apiURL.color.all, (rawData) =>
         rawData.map((item) => ({
             id: item.idColor,
@@ -69,7 +77,14 @@ function Color({ onClose, onAddColor, colorSelect }) {
                                             border: selectedColors.some(selected => selected.id === color.id) ? `2px solid ${color.name}` : '2px solid',
                                             backgroundColor: selectedColors.some(selected => selected.id === color.id) ? `${color.name}` : '#fff'
                                         }}
+                                        className="position-relative"
                                     >
+                                        <span 
+                                        className=" position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                        onClick={handleDelColor}
+                                        >
+                                            x
+                                        </span>
                                         {color.name}
                                     </div>
                                 ))}

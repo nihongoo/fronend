@@ -22,6 +22,7 @@ const useFetchData = (apiURL, transformData) => {
             }
         };
         fetchData();
+        // eslint-disable-next-line
     }, [apiURL]);
 
     return { data, loading, error };
