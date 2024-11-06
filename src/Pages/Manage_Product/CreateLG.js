@@ -12,6 +12,7 @@ function CreateLG() {
     const [size, setSize] = useState(false);
     const [colorSelected, setColorSelected] = useState([]);
     const [sizeSelected, setSizeSelected] = useState([]);
+    const [error, setError] = useState(false)
     const [newProduct, setNewProduct] = useState({
         product: {
             name: '',
@@ -59,38 +60,47 @@ function CreateLG() {
 
     const handleAddColor = useCallback((data) => {
         setColorSelected(data);
-        setNewProduct((prev) => ({
-            ...prev,
-            productDetails: data.map(detail => ({
+        const newDetails = data.flatMap(color =>
+            sizeSelected.map(size => ({
                 quantity: 1,
                 giaNhap: 0,
                 giaBan: 0,
-                idColor: detail.id,
-                idSize: ''
+                idColor: color.id,
+                idSize: size.id
             }))
-        }))
-    }, []);
+        );
+
+        setNewProduct(prev => ({
+            ...prev,
+            productDetails: newDetails
+        }));
+    }, [sizeSelected]);
 
     const handleAddSize = useCallback((data) => {
-        setSizeSelected(data);
-        setNewProduct((prev) => ({
-            ...prev,
-            productDetails: prev.productDetails.map(detail => ({
-                ...detail,
-                idSize: data.map(size => size.id)
+        setSizeSelected(data)
+        const newDetails = colorSelected.flatMap(color =>
+            data.map(size => ({
+                id: `${color.id}-${size.id}`,
+                quantity: 1,
+                giaNhap: 0,
+                giaBan: 0,
+                idColor: color.id,
+                idSize: size.id
             }))
-        }))
-    }, []);
+        );
+
+        setNewProduct(prev => ({
+            ...prev,
+            productDetails: newDetails
+        }));
+    }, [colorSelected]);
 
     const handleDeleteDetail = (id) => {
         setNewProduct(prev => ({
             ...prev,
-            productDetails: prev.productDetails.filter(detail => detail.idSize !== id)
+            productDetails: prev.productDetails.filter(detail => detail.id !== id)
         }));
     };
-
-    console.log(newProduct);
-
 
     return (
         <div>
@@ -111,6 +121,7 @@ function CreateLG() {
                                     name: newInputValue
                                 }
                             }));
+                            setError(false)
                         }}
                         getOptionLabel={(option) => option.name}
                         renderInput={(params) => (
@@ -120,6 +131,9 @@ function CreateLG() {
                                 variant="outlined"
                                 fullWidth
                                 className="form-control"
+                                required
+                                error={error && !newProduct.product.name}
+                                helperText={error && !newProduct.product.name ? 'Tên sản phẩm là bắt buộc':''}
                             />
                         )}
                         freeSolo
@@ -264,17 +278,15 @@ function CreateLG() {
             </div>
             {/* ProductDetail */}
             <div>
-                {newProduct.productDetails.map((detail, index) => (
-                    <div key={index}>
-                        {colorSelected.map((c) => (
-                            <ProductDetail
-                                key={c.id}
-                                color={c}
-                                product={detail}
-                                onDelete={() => handleDeleteDetail(detail.idSize)}
-                            />
-                        ))}
-                    </div>
+                {colorSelected.map((c) => (
+                    <ProductDetail
+                        key={c.id}
+                        color={c}
+                        productDetails={newProduct.productDetails.filter(detail => detail.idColor === c.id)}
+                        nameProduct={newProduct.product.name}
+                        size={sizeSelected}
+                        onDelete={handleDeleteDetail}
+                    />
                 ))}
             </div>
         </div>
