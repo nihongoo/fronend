@@ -2,10 +2,10 @@ import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
 import { Button } from '@mui/material';
 
-function ProductDetail({size, nameProduct, productDetails, color, onDelete }) {
+function ProductDetail({size, nameProduct, productDetails, color, onDelete, onUpdate }) {
     const rows = productDetails.map(product => ({
         ...product,
-        size: size.find(c => c.id === product.idSize).name,
+        size: size.find(c => c.id === product.idSize).name || 'N/A',
     }));
 
     if (!rows || rows.length === 0) {
@@ -52,6 +52,10 @@ function ProductDetail({size, nameProduct, productDetails, color, onDelete }) {
         },
     ];
 
+    const handleRowEdit = (updateRow)=>{
+        onUpdate(updateRow)  
+        return updateRow      
+    }
     const paginationModel = { page: 0, pageSize: 5 };
 
     return (
@@ -73,6 +77,9 @@ function ProductDetail({size, nameProduct, productDetails, color, onDelete }) {
                         rows={rows}
                         initialState={{ pagination: { paginationModel } }}
                         pageSizeOptions={[5, 10]}
+                        processRowUpdate={handleRowEdit}
+                        onProcessRowUpdateError={(error)=>{console.log(error)}}
+                        disableRowSelectionOnClick
                     />
                 </Paper>
             </div>

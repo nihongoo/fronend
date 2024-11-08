@@ -23,6 +23,14 @@ const apiURL = {
         delete: 'https://localhost:7265/TagetCustomers/Delete-TagetCustomers',
         search: 'https://localhost:7265/TagetCustomers/Search'
     },
+    meterial: {
+        base: 'https://localhost:7265/Meterial/Meterial/',
+        all: 'https://localhost:7265/Meterial/Get-All-Meterial/',
+        create: 'https://localhost:7265/Meterial/Create-Meterial/',
+        edit: 'https://localhost:7265/Meterial/Edit-Meterial/',
+        delete: 'https://localhost:7265/Meterial/Delete-Meterial',
+        search: 'https://localhost:7265/Meterial/Search'
+    },
     color: {
         base: 'https://localhost:7265/Color/Color/',
         all: 'https://localhost:7265/Color/Get-All-Color/',

@@ -10,8 +10,6 @@ const DataTable = ({ columns, data, onChangeData, apiURLDel, apiURLEdit }) => {
     const handleEdit = useCallback((id) => {
         setEditId((prevId) => (prevId === id ? null : id));
     }, []);
-    console.log(data);
-    
 
     return (
         <div>

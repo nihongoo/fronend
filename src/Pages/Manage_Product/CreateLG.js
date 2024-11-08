@@ -3,6 +3,7 @@ import useFetchData from '../../customHook/useFetchData.js';
 import apiURL from '../../Routes/API/index.js';
 import Color from './Color.js';
 import Size from './Size.js';
+import SubmitButton from './SubmitButton.js'
 import ProductDetail from './ProductDetail.js';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
@@ -17,15 +18,15 @@ function CreateLG() {
         product: {
             name: '',
             description: '',
-            productCode: '',
-            image: '',
+            productCode: '111',
+            image: 'a',
             thoiGianBaoHanh: '',
-            chatLieu: '',
             createTime: new Date().toISOString(),
             status: 0,
             idBrand: '',
             idCategory: '',
-            idTargetCustomer: ''
+            idMeterial: '',
+            idTagetCustomer: ''
         },
         productDetails: []
     });
@@ -53,7 +54,14 @@ function CreateLG() {
 
     const { data: target } = useFetchData(apiURL.target.all, (rawData) =>
         rawData.map((item) => ({
-            id: item.idTargetCustomer,
+            id: item.idTagetCustomer,
+            name: item.name,
+        }))
+    );
+
+    const { data: meterials } = useFetchData(apiURL.meterial.all, (rawData) =>
+        rawData.map((item) => ({
+            id: item.idMeterial,
             name: item.name,
         }))
     );
@@ -62,11 +70,13 @@ function CreateLG() {
         setColorSelected(data);
         const newDetails = data.flatMap(color =>
             sizeSelected.map(size => ({
+                id: `${color.id}-${size.id}`,
                 quantity: 1,
                 giaNhap: 0,
                 giaBan: 0,
                 idColor: color.id,
-                idSize: size.id
+                idSize: size.id,
+                productDetailCode:'222'
             }))
         );
 
@@ -85,7 +95,8 @@ function CreateLG() {
                 giaNhap: 0,
                 giaBan: 0,
                 idColor: color.id,
-                idSize: size.id
+                idSize: size.id,
+                productDetailCode:'222'
             }))
         );
 
@@ -102,6 +113,15 @@ function CreateLG() {
         }));
     };
 
+    const handleUpdateDetail = (updatedDetail) => {
+        setNewProduct(prev => ({
+            ...prev,
+            productDetails: prev.productDetails.map(detail => 
+                detail.id === updatedDetail.id ? updatedDetail : detail
+            )
+        }));
+    };
+    
     return (
         <div>
             {/* Thông tin sản phẩm */}
@@ -133,7 +153,7 @@ function CreateLG() {
                                 className="form-control"
                                 required
                                 error={error && !newProduct.product.name}
-                                helperText={error && !newProduct.product.name ? 'Tên sản phẩm là bắt buộc':''}
+                                helperText={error && !newProduct.product.name ? 'Tên sản phẩm là bắt buộc' : ''}
                             />
                         )}
                         freeSolo
@@ -143,6 +163,16 @@ function CreateLG() {
                             <Autocomplete
                                 disablePortal
                                 options={categories}
+                                onChange={(event, newValue) => {
+                                    setNewProduct(prev => ({
+                                        ...prev,
+                                        product: {
+                                            ...prev.product,
+                                            idCategory: newValue ? newValue.id : ''
+                                        }
+                                    }));
+                                    setError(false);
+                                }}
                                 getOptionLabel={(option) => option.name}
                                 renderInput={(params) => (
                                     <TextField
@@ -151,6 +181,9 @@ function CreateLG() {
                                         variant="outlined"
                                         fullWidth
                                         className="form-control"
+                                        required
+                                        error={error.category}
+                                        helperText={error.category ? 'Loại sản phẩm là bắt buộc' : ''}
                                     />
                                 )}
                             />
@@ -159,6 +192,16 @@ function CreateLG() {
                             <Autocomplete
                                 disablePortal
                                 options={brands}
+                                onChange={(event, newValue) => {
+                                    setNewProduct(prev => ({
+                                        ...prev,
+                                        product: {
+                                            ...prev.product,
+                                            idBrand: newValue ? newValue.id : ''
+                                        }
+                                    }));
+                                    setError(false);
+                                }}
                                 getOptionLabel={(option) => option.name}
                                 renderInput={(params) => (
                                     <TextField
@@ -167,6 +210,9 @@ function CreateLG() {
                                         variant="outlined"
                                         fullWidth
                                         className="form-control"
+                                        required
+                                        error={error.brand}
+                                        helperText={error.brand ? 'Thương hiệu là bắt buộc' : ''}
                                     />
                                 )}
                             />
@@ -177,6 +223,16 @@ function CreateLG() {
                             <Autocomplete
                                 disablePortal
                                 options={target}
+                                onChange={(event, newValue) => {
+                                    setNewProduct(prev => ({
+                                        ...prev,
+                                        product: {
+                                            ...prev.product,
+                                            idTagetCustomer: newValue ? newValue.id : ''
+                                        }
+                                    }));
+                                    setError(false);
+                                }}
                                 getOptionLabel={(option) => option.name}
                                 renderInput={(params) => (
                                     <TextField
@@ -185,6 +241,38 @@ function CreateLG() {
                                         variant="outlined"
                                         fullWidth
                                         className="form-control"
+                                        required
+                                        error={error.target}
+                                        helperText={error.target ? 'Đối tượng sử dụng là bắt buộc' : ''}
+                                    />
+                                )}
+                            />
+                        </div>
+                        <div className="flex-fill ms-1 mt-4">
+                            <Autocomplete
+                                disablePortal
+                                options={meterials}
+                                onChange={(event, newValue) => {
+                                    setNewProduct(prev => ({
+                                        ...prev,
+                                        product: {
+                                            ...prev.product,
+                                            idMeterial: newValue ? newValue.id : ''
+                                        }
+                                    }));
+                                    setError(false);
+                                }}
+                                getOptionLabel={(option) => option.name}
+                                renderInput={(params) => (
+                                    <TextField
+                                        {...params}
+                                        label="Nhập chất liệu"
+                                        variant="outlined"
+                                        fullWidth
+                                        className="form-control"
+                                        required
+                                        error={error.meterial}
+                                        helperText={error.meterial ? 'Chất liệu là bắt buộc' : ''}
                                     />
                                 )}
                             />
@@ -286,8 +374,14 @@ function CreateLG() {
                         nameProduct={newProduct.product.name}
                         size={sizeSelected}
                         onDelete={handleDeleteDetail}
+                        onUpdate={handleUpdateDetail}
                     />
                 ))}
+            </div>
+            <div>
+                {newProduct.productDetails.length !== 0 && 
+                    <SubmitButton obj={newProduct}/>
+                }
             </div>
         </div>
     );

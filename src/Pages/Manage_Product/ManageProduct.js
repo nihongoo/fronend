@@ -26,6 +26,7 @@ function ManageProduct() {
                 const formatData = data.map((item) => ({
                     id: item.idProduct,
                     name: item.name,
+                    productCode: item.productCode,
                     createTime: item.createTime,
                     image: item.image,
                     status: item.status,
@@ -72,6 +73,7 @@ function ManageProduct() {
     const columns = [
         { Header: 'STT', accessor: 'serialNumber' },
         { Header: 'Tên sản phẩm', accessor: 'name' },
+        { Header: 'Mã sản phẩm', accessor: 'productCode' },
         {
             Header: 'Ngày thêm',
             accessor: 'createTime',
